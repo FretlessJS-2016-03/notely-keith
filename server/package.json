@@ -1,0 +1,14 @@
+{
+  "name": "notelyserver",
+  "version": "0.1.0",
+  "description": "app.js",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "author": "keith turner",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.13.4"
+  }
+}
