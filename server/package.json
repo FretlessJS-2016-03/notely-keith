@@ -4,11 +4,16 @@
   "description": "app.js",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js"
+    "start": "node app.js",
+    "dev": "node_modules/.bin/supervisor app.js"
   },
   "author": "keith turner",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.13.4"
+    "express": "^4.13.4",
+    "mongoose": "^4.4.10"
+  },
+  "devDependencies": {
+    "supervisor": "^0.9.1"
   }
 }
