@@ -22,7 +22,10 @@
 
   NotesController.$inject = ['$state', 'NotesService'];
   function NotesController($state, NotesService) {
-    NotesService.fetch();
+    NotesService.fetch(function() {
+      console.log("Notes: " + NotesService.notes);
+    });
+
     $state.go('notes.form');
   }
 })();

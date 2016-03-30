@@ -4,10 +4,13 @@
 
       NotesService.$inject = ['$http'];
       function NotesService($http) {
-        this.fetch = function() {
+        var _this = this;
+        _this.fetch = function(callback) {
+          callback();
           $http.get('http://localhost:3030')
-            .success(function() {
-              console.log('It finished!');
+            .success(function(notesData) {
+            _this.notes = notesData;
+            callback();
             });
         };
       }
