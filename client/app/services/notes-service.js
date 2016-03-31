@@ -7,16 +7,41 @@
     var _this = this;
     _this.notes = [];
 
-    _this.fetch = function(callback) {
-      $http.get('http://localhost:3030')
-        .success(function(notesData) {
-          _this.notes = notesData;
-          callback();
-        });
+    _this.fetch = function() {
+      return $http.get('http://localhost:3030/notes')
+        .then(
+          // Success
+          function(response) {
+            _this.notes = response.data;
+          },
+
+          // Failure
+          function(response) {
+            console.log('aww, snap:' + response);
+          }
+        );
     };
 
     _this.getNotes = function() {
       return _this.notes;
+    };
+
+    _this.create = function(note) {
+      return $http.post('http://localhost:3030/notes', {
+        note: note
+      }).then(function(response) {
+        _this.notes.unshift(response.data.note);
+      });
+    };
+
+    _this.findById = function(noteId) {
+      for (var i = 0; i < _this.notes.length; i++) {
+        // If the IDs match, return the current note
+        if (_this.notes[i]._id === noteId) {
+          return angular.copy(_this.notes[i]);
+        }
+      }
+      return {};
     };
   }
 }());

@@ -1,12 +1,13 @@
 {
-  "name": "Notely",
+  "name": "notely",
   "private": true,
   "version": "0.1.0",
-  "description": "A not taking app.",
-  "repository": "git@github.com:FretlessJS-2016-03/notely-keith.git",
+  "description": "A note-taking app.",
+  "repository": "https://github.com/FretlessJS-2016-03/notely.git",
   "license": "MIT",
   "devDependencies": {
     "bower": "^1.7.7",
+    "eslint": "^2.5.3",
     "http-server": "^0.6.1"
   },
   "scripts": {
