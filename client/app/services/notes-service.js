@@ -2,13 +2,13 @@
   angular.module('notely')
     .service('NotesService', NotesService);
 
-  NotesService.$inject = ['$http'];
-  function NotesService($http) {
+  NotesService.$inject = ['$http', 'API_BASE'];
+  function NotesService($http, API_BASE) {
     var _this = this;
     _this.notes = [];
 
     _this.fetch = function() {
-      return $http.get('http://localhost:3030/notes')
+      return $http.get(`${API_BASE}notes`)
         .then(
           // Success
           function(response) {
@@ -17,7 +17,7 @@
 
           // Failure
           function(response) {
-            console.log('aww, snap:' + response);
+            console.log(`aww, snap: ${response}`);
           }
         );
     };
@@ -27,22 +27,42 @@
     };
 
     _this.create = function(note) {
-      return $http.post('http://localhost:3030/notes', {
+      var creationPromise = $http.post(`${API_BASE}notes`, {
         note: note
-      }).then(function(response) {
+      });
+
+      creationPromise.then(function(response) {
         _this.notes.unshift(response.data.note);
       });
+
+      return creationPromise;
     };
 
     _this.update = function(note) {
-      return $http.put('http://localhost:3030/notes/' + note._id, {
+      return $http.put(`${API_BASE}notes/${note._id}`, {
         note: {
           title: note.title,
           body_html: note.body_html
         }
       }).then(function(response) {
-        _this.replaceNote(response.data.note);  // making this work
+        _this.replaceNote(response.data.note);
       });
+    };
+
+    _this.delete = function(note) {
+      return $http.delete(`${API_BASE}notes/${note._id}`
+      ).then(function(response) {
+        _this.removeNote(response.data.note);
+      });
+    };
+
+    _this.removeNote = function(note) {
+      for (var i = 0; i < _this.notes.length; i++) {
+        if (_this.notes[i]._id === note._id) {
+          _this.notes.splice(i, 1);
+          return;
+        }
+      }
     };
 
     _this.replaceNote = function(updatedNote) {
