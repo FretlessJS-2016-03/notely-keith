@@ -48,7 +48,7 @@
         _this.replaceNote(response.data.note);
       });
     };
-
+      //D in delete here.
     _this.delete = function(note) {
       return $http.delete(`${API_BASE}notes/${note._id}`
       ).then(function(response) {
